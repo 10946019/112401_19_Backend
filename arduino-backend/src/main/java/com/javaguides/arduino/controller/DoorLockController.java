@@ -1,8 +1,8 @@
 package com.javaguides.arduino.controller;
 
-import com.javaguides.arduino.bean.LockBean;
+import com.javaguides.arduino.bean.DoorLockBean;
 import com.javaguides.arduino.exception.ResourceNotFoundException;
-import com.javaguides.arduino.service.LockService;
+import com.javaguides.arduino.service.DoorLockService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,42 +12,42 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/lock")
-public class LockController {
+@RequestMapping("/doorLock")
+public class DoorLockController {
 
-    private final LockService lockService;
+    private final DoorLockService doorLockService;
 
     @GetMapping(path = "")
-    public ResponseEntity<List<LockBean>> searchAll(){
-        return ResponseEntity.ok(lockService.searchAll());
+    public ResponseEntity<List<DoorLockBean>> searchAll(){
+        return ResponseEntity.ok(doorLockService.searchAll());
     }
 
     @GetMapping(path = "", params = {"id"})
-    public ResponseEntity<LockBean> getLock(@RequestParam(name = "id") Integer id){
-        LockBean lockBean = lockService.getById(id).orElseThrow(()-> new ResourceNotFoundException("此id不存在"));
-        return ResponseEntity.ok(lockBean);
+    public ResponseEntity<DoorLockBean> getLock(@RequestParam(name = "id") Integer id){
+        DoorLockBean doorLockBean = doorLockService.getById(id).orElseThrow(()-> new ResourceNotFoundException("此id不存在"));
+        return ResponseEntity.ok(doorLockBean);
     }
 
     @GetMapping(path = "", params = {"name"})
-    public ResponseEntity<List<LockBean>> getLock(@RequestParam(name = "name") String name){
-        return ResponseEntity.ok(lockService.getByNameKeyword(name));
+    public ResponseEntity<List<DoorLockBean>> getLock(@RequestParam(name = "name") String name){
+        return ResponseEntity.ok(doorLockService.getByNameKeyword(name));
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<LockBean> createLock(@RequestBody LockBean lockBean){
-        lockService.save(lockBean);
-        return ResponseEntity.ok(lockBean);
+    public ResponseEntity<DoorLockBean> createLock(@RequestBody DoorLockBean doorLockBean){
+        doorLockService.save(doorLockBean);
+        return ResponseEntity.ok(doorLockBean);
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<LockBean> updateLock(@RequestBody LockBean lockBean){
-        lockService.update(lockBean);
-        return ResponseEntity.ok(lockBean);
+    public ResponseEntity<DoorLockBean> updateLock(@RequestBody DoorLockBean doorLockBean){
+        doorLockService.update(doorLockBean);
+        return ResponseEntity.ok(doorLockBean);
     }
 
     @DeleteMapping(path = "", params = {"id"})
     public ResponseEntity<HttpStatus> deleteLock(@RequestParam(name = "id") Integer id){
-        lockService.delete(id);
+        doorLockService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
