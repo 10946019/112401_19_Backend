@@ -8,7 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -28,21 +31,4 @@ public class AuthorizationController {
         return ResponseEntity.ok(authorizationBean);
     }
 
-    @PostMapping(path = "")
-    public ResponseEntity<AuthorizationBean> createAuthorization(@RequestBody AuthorizationBean authorizationBean){
-        authorizationService.save(authorizationBean);
-        return ResponseEntity.ok(authorizationBean);
-    }
-
-    @PatchMapping(path = "")
-    public ResponseEntity<AuthorizationBean> updateAuthorization(@RequestBody AuthorizationBean authorizationBean){
-        authorizationService.update(authorizationBean);
-        return ResponseEntity.ok(authorizationBean);
-    }
-
-    @DeleteMapping(path = "", params = {"id"})
-    public ResponseEntity<HttpStatus> deleteAuthorization(@RequestParam(name = "id") Integer id){
-        authorizationService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }

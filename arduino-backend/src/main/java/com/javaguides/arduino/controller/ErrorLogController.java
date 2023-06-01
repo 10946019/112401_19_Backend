@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -29,20 +31,20 @@ public class ErrorLogController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<ErrorLogBean> createErrorLog(@RequestBody ErrorLogBean errorLogBean){
+    public ResponseEntity<Map<String,String>> createErrorLog(@RequestBody ErrorLogBean errorLogBean){
         errorLogService.save(errorLogBean);
-        return ResponseEntity.ok(errorLogBean);
+        return ResponseEntity.ok(Collections.singletonMap("result", "新增成功"));
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<ErrorLogBean> updateErrorLog(@RequestBody ErrorLogBean errorLogBean){
+    public ResponseEntity<Map<String,String>> updateErrorLog(@RequestBody ErrorLogBean errorLogBean){
         errorLogService.update(errorLogBean);
-        return ResponseEntity.ok(errorLogBean);
+        return ResponseEntity.ok(Collections.singletonMap("result", "修改成功"));
     }
 
     @DeleteMapping(path = "", params = {"id"})
-    public ResponseEntity<HttpStatus> deleteErrorLog(@RequestParam(name = "id") Integer id){
+    public ResponseEntity<Map<String,String>> deleteErrorLog(@RequestParam(name = "id") Integer id){
         errorLogService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(Collections.singletonMap("result", "刪除成功"));
     }
 }

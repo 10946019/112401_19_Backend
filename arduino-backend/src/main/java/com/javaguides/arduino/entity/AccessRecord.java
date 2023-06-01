@@ -1,5 +1,6 @@
 package com.javaguides.arduino.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,16 +29,20 @@ public class AccessRecord {
      *
      * @Since 1.0.1
      */
-    @Column(name = "user_id")
-    private Integer userId;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", referencedColumnName="id")
+    private User user;
 
     /**
      * 鎖id
      *
      * @Since 1.0.1
      */
-    @Column(name = "lock_id")
-    private Integer lockId;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="lock_id", referencedColumnName="id")
+    private DoorLock lock;
 
     /**
      * 開鎖時間

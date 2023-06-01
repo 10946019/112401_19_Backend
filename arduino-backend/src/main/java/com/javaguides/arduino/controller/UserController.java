@@ -1,5 +1,6 @@
 package com.javaguides.arduino.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaguides.arduino.bean.UserBean;
 import com.javaguides.arduino.exception.ResourceNotFoundException;
 import com.javaguides.arduino.service.UserService;
@@ -8,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @AllArgsConstructor
 @RestController
@@ -17,32 +18,28 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping(path = "")
-    public ResponseEntity<List<UserBean>> searchAll(){
-        return ResponseEntity.ok(userService.searchAll());
+    @GetMapping(path = "/login")
+    public ResponseEntity<UserBean> login(@RequestBody UserBean userBean) {
+        UserBean userLoginBean = userService.login(userBean.getId(), userBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("登入失敗"));
+        return ResponseEntity.ok(userLoginBean);
     }
 
-    @GetMapping(path = "", params = {"id"})
-    public ResponseEntity<UserBean> getUser(@RequestParam(name = "id") Integer id){
-        UserBean userBean = userService.getById(id).orElseThrow(()-> new ResourceNotFoundException("此帳號不存在"));
-        return ResponseEntity.ok(userBean);
-    }
 
     @PostMapping(path = "")
-    public ResponseEntity<UserBean> createUser(@RequestBody UserBean userBean){
+    public ResponseEntity<Map<String,String>> createUser(@RequestBody UserBean userBean) {
         userService.save(userBean);
-        return ResponseEntity.ok(userBean);
+        return ResponseEntity.ok(Collections.singletonMap("result", "新增成功"));
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<UserBean> updateUser(@RequestBody UserBean userBean){
+    public ResponseEntity<Map<String,String>> updateUser(@RequestBody UserBean userBean) {
         userService.update(userBean);
-        return ResponseEntity.ok(userBean);
+        return ResponseEntity.ok(Collections.singletonMap("result", "修改成功"));
     }
 
     @DeleteMapping(path = "", params = {"id"})
-    public ResponseEntity<HttpStatus> deleteUser(@RequestParam(name = "id") Integer id){
+    public ResponseEntity<Map<String,String>> deleteUser(@RequestParam(name = "id") Integer id) {
         userService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(Collections.singletonMap("result", "刪除成功"));
     }
 }

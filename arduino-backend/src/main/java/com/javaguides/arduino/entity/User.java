@@ -1,7 +1,10 @@
 package com.javaguides.arduino.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -42,4 +45,5 @@ public class User {
      */
     @Column(name = "password", length = 50, nullable = false)
     private String password;
+
 }
