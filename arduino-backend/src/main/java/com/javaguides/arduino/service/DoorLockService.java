@@ -2,7 +2,7 @@ package com.javaguides.arduino.service;
 
 import com.javaguides.arduino.bean.LockBean;
 import com.javaguides.arduino.dao.LockDAO;
-import com.javaguides.arduino.entity.Lock;
+import com.javaguides.arduino.entity.DoorLock;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +19,11 @@ public class LockService {
     }
 
     public void save(LockBean lockBean) {
-        Lock saveResult = lockDAO.saveAndFlush(convertBeanToEntity(lockBean));
+        DoorLock saveResult = lockDAO.saveAndFlush(convertBeanToEntity(lockBean));
         lockDAO.save(saveResult);
     }
 
-    public List<LockBean> searchAll(){
+    public List<LockBean> searchAll() {
         return lockDAO.findAll()
                 .stream()
                 .map(this::convertEntityToBean)
@@ -31,9 +31,9 @@ public class LockService {
     }
 
     public Optional<LockBean> getById(Integer id) {
-        Optional<Lock> optional = lockDAO.findById(id);
+        Optional<DoorLock> optional = lockDAO.findById(id);
         if (optional.isPresent()) {
-            Lock entity = optional.get();
+            DoorLock entity = optional.get();
             LockBean bean = convertEntityToBean(entity);
             return Optional.of(bean);
         } else {
@@ -41,9 +41,17 @@ public class LockService {
         }
     }
 
+    public List<LockBean> getByNameKeyword(String name) {
+        return lockDAO.findAll()
+                .stream()
+                .filter(p -> p.getName().contains(name))
+                .map(this::convertEntityToBean)
+                .collect(Collectors.toList());
+    }
+
     public void update(LockBean lockBean) {
-        Optional<Lock> optional = lockDAO.findById(lockBean.getId());
-        Lock lock = optional.get();
+        Optional<DoorLock> optional = lockDAO.findById(lockBean.getId());
+        DoorLock lock = optional.get();
         lock.setName(lockBean.getName());
         lockDAO.update(lock);
     }
@@ -52,15 +60,15 @@ public class LockService {
         lockDAO.deleteById(id);
     }
 
-    private LockBean convertEntityToBean(Lock lock){
+    private LockBean convertEntityToBean(DoorLock lock) {
         LockBean lockBean = new LockBean();
         lockBean.setId(lock.getId());
         lockBean.setName(lock.getName());
         return lockBean;
     }
 
-    private Lock convertBeanToEntity(LockBean lockBean){
-        Lock lock = new Lock();
+    private DoorLock convertBeanToEntity(LockBean lockBean) {
+        DoorLock lock = new DoorLock();
         lock.setId(lockBean.getId());
         lock.setName(lockBean.getName());
         return lock;

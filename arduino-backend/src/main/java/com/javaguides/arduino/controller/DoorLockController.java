@@ -28,6 +28,11 @@ public class LockController {
         return ResponseEntity.ok(lockBean);
     }
 
+    @GetMapping(path = "", params = {"name"})
+    public ResponseEntity<List<LockBean>> getLock(@RequestParam(name = "name") String name){
+        return ResponseEntity.ok(lockService.getByNameKeyword(name));
+    }
+
     @PostMapping(path = "")
     public ResponseEntity<LockBean> createLock(@RequestBody LockBean lockBean){
         lockService.save(lockBean);

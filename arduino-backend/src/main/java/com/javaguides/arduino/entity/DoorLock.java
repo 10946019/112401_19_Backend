@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "lock")
-public class Lock {
+@Table(name = "doorlock")
+public class DoorLock {
     /**
      * 鎖id
      *
