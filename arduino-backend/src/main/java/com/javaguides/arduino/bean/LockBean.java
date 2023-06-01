@@ -3,9 +3,7 @@ package com.javaguides.arduino.bean;
 import lombok.Data;
 
 @Data
-public class DoorBean {
+public class LockBean {
     public Integer id;
     public String name;
-    public String location;
-    public String description;
 }

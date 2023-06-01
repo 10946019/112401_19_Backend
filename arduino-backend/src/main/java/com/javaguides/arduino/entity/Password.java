@@ -1,16 +1,18 @@
 package com.javaguides.arduino.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "password")
+public class Password {
     /**
-     * 使用者id
+     * 密碼id
      *
      * @Since 1.0.1
      */
@@ -20,23 +22,15 @@ public class User {
     private Integer id;
 
     /**
-     * 使用者名稱
+     * 使用者id
      *
      * @Since 1.0.1
      */
-    @Column(name = "name", length = 50, nullable = false)
-    private String name;
+    @Column(name = "user_id")
+    private Integer userId;
 
     /**
-     * 使用者email
-     *
-     * @Since 1.0.1
-     */
-    @Column(name = "email", length = 50, nullable = false)
-    private String email;
-
-    /**
-     * 使用者密碼
+     * 密碼
      *
      * @Since 1.0.1
      */

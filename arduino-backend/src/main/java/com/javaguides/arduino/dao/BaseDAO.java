@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @NoRepositoryBean
-public interface BaseDAO <E, ID extends Serializable> extends BaseViewDAO<E, ID>, JpaRepository<E, ID> {
+public interface BaseDAO<E, ID extends Serializable> extends BaseViewDAO<E, ID>, JpaRepository<E, ID> {
     @Nonnull
     @Override
     Optional<E> findById(@Nonnull ID id);

@@ -3,7 +3,6 @@ package com.javaguides.arduino.service;
 import com.javaguides.arduino.bean.UserBean;
 import com.javaguides.arduino.dao.UserDAO;
 import com.javaguides.arduino.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserBean> getById(String id) {
+    public Optional<UserBean> getById(Integer id) {
         Optional<User> optional = userDAO.findById(id);
         if (optional.isPresent()) {
             User entity = optional.get();
@@ -43,26 +42,32 @@ public class UserService {
     }
 
     public void update(UserBean userBean) {
-        Optional<User> optional = userDAO.findById(userBean.getAccount());
+        Optional<User> optional = userDAO.findById(userBean.getId());
         User user = optional.get();
+        user.setName(userBean.getName());
+        user.setEmail(userBean.getEmail());
         user.setPassword(userBean.getPassword());
         userDAO.update(user);
     }
 
-    public void delete(String id) {
+    public void delete(Integer id) {
         userDAO.deleteById(id);
     }
 
     private UserBean convertEntityToBean(User user){
         UserBean userBean = new UserBean();
-        userBean.setAccount(user.getAccount());
+        userBean.setId(user.getId());
+        userBean.setName(user.getName());
+        userBean.setEmail(user.getEmail());
         userBean.setPassword(user.getPassword());
         return userBean;
     }
 
     private User convertBeanToEntity(UserBean userBean){
         User user = new User();
-        user.setAccount(userBean.getAccount());
+        user.setId(userBean.getId());
+        user.setName(userBean.getName());
+        user.setEmail(userBean.getEmail());
         user.setPassword(userBean.getPassword());
         return user;
     }
