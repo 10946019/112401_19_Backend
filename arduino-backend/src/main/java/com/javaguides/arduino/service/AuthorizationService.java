@@ -2,7 +2,9 @@ package com.javaguides.arduino.service;
 
 import com.javaguides.arduino.bean.AuthorizationBean;
 import com.javaguides.arduino.dao.AuthorizationDAO;
+import com.javaguides.arduino.dao.UserDAO;
 import com.javaguides.arduino.entity.Authorization;
+import com.javaguides.arduino.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,14 +15,11 @@ import java.util.stream.Collectors;
 public class AuthorizationService {
 
     private final AuthorizationDAO authorizationDAO;
+    private final UserDAO userDAO;
 
-    public AuthorizationService(AuthorizationDAO authorizationDAO) {
+    public AuthorizationService(AuthorizationDAO authorizationDAO, UserDAO userDAO) {
         this.authorizationDAO = authorizationDAO;
-    }
-
-    public void save(AuthorizationBean authorizationBean) {
-        Authorization saveResult = authorizationDAO.saveAndFlush(convertBeanToEntity(authorizationBean));
-        authorizationDAO.save(saveResult);
+        this.userDAO = userDAO;
     }
 
     public List<AuthorizationBean> searchAll(){
@@ -29,6 +28,7 @@ public class AuthorizationService {
                 .map(this::convertEntityToBean)
                 .collect(Collectors.toList());
     }
+
 
     public Optional<AuthorizationBean> getById(Integer id) {
         Optional<Authorization> optional = authorizationDAO.findById(id);
@@ -41,34 +41,17 @@ public class AuthorizationService {
         }
     }
 
-    public void update(AuthorizationBean authorizationBean) {
-        Optional<Authorization> optional = authorizationDAO.findById(authorizationBean.getId());
-        Authorization authorization = optional.get();
-        authorization.setUserId(authorizationBean.getUserId());
-        authorization.setLockId(authorizationBean.getLockId());
-        authorization.setAccessModeId(authorizationBean.getAccessModeId());
-        authorizationDAO.update(authorization);
-    }
-
-    public void delete(Integer id) {
-        authorizationDAO.deleteById(id);
-    }
-
     private AuthorizationBean convertEntityToBean(Authorization authorization){
         AuthorizationBean authorizationBean = new AuthorizationBean();
         authorizationBean.setId(authorization.getId());
-        authorizationBean.setUserId(authorization.getUserId());
-        authorizationBean.setLockId(authorization.getLockId());
-        authorizationBean.setAccessModeId(authorization.getAccessModeId());
+        authorizationBean.setUserId(authorization.getUser().getId());
+        authorizationBean.setUserName(authorization.getUser().getName());
+        authorizationBean.setLockId(authorization.getLock().getId());
+        authorizationBean.setLockName(authorization.getLock().getName());
+        authorizationBean.setAccessModeId(authorization.getAccessMode().getId());
+        authorizationBean.setAccessModeName(authorization.getAccessMode().getName());
         return authorizationBean;
     }
 
-    private Authorization convertBeanToEntity(AuthorizationBean authorizationBean){
-        Authorization authorization = new Authorization();
-        authorization.setId(authorizationBean.getId());
-        authorization.setUserId(authorizationBean.getUserId());
-        authorization.setLockId(authorizationBean.getLockId());
-        authorization.setAccessModeId(authorizationBean.getAccessModeId());
-        return authorization;
-    }
+
 }

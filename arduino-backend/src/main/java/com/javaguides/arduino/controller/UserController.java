@@ -19,13 +19,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping(path = "/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody UserBean userBean) {
+    public ResponseEntity<UserBean> login(@RequestBody UserBean userBean) {
         UserBean userLoginBean = userService.login(userBean.getId(), userBean.getPassword()).orElseThrow(() -> new ResourceNotFoundException("登入失敗"));
-        Map<String, Object> data = new HashMap<>();
-        data.put("id", userLoginBean.id);
-        data.put("name", userLoginBean.name);
-        data.put("email",userLoginBean.email);
-        return ResponseEntity.ok(data);
+        return ResponseEntity.ok(userLoginBean);
     }
 
 

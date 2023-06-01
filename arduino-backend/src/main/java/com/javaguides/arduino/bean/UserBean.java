@@ -1,5 +1,6 @@
 package com.javaguides.arduino.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data

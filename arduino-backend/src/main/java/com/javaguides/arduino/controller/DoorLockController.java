@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -34,20 +36,20 @@ public class DoorLockController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<DoorLockBean> createLock(@RequestBody DoorLockBean doorLockBean){
+    public ResponseEntity<Map<String,String>> createLock(@RequestBody DoorLockBean doorLockBean){
         doorLockService.save(doorLockBean);
-        return ResponseEntity.ok(doorLockBean);
+        return ResponseEntity.ok(Collections.singletonMap("result", "新增成功"));
     }
 
     @PatchMapping(path = "")
-    public ResponseEntity<DoorLockBean> updateLock(@RequestBody DoorLockBean doorLockBean){
+    public ResponseEntity<Map<String,String>> updateLock(@RequestBody DoorLockBean doorLockBean){
         doorLockService.update(doorLockBean);
-        return ResponseEntity.ok(doorLockBean);
+        return ResponseEntity.ok(Collections.singletonMap("result", "修改成功"));
     }
 
     @DeleteMapping(path = "", params = {"id"})
-    public ResponseEntity<HttpStatus> deleteLock(@RequestParam(name = "id") Integer id){
+    public ResponseEntity<Map<String,String>> deleteLock(@RequestParam(name = "id") Integer id){
         doorLockService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(Collections.singletonMap("result", "刪除成功"));
     }
 }
