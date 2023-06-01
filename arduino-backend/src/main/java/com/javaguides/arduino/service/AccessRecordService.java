@@ -18,11 +18,6 @@ public class AccessRecordService {
         this.accessRecordDAO = accessRecordDAO;
     }
 
-    public void save(AccessRecordBean accessRecordBean) {
-        AccessRecord saveResult = accessRecordDAO.saveAndFlush(convertBeanToEntity(accessRecordBean));
-        accessRecordDAO.save(saveResult);
-    }
-
     public List<AccessRecordBean> searchAll(){
         return accessRecordDAO.findAll()
                 .stream()
@@ -41,37 +36,16 @@ public class AccessRecordService {
         }
     }
 
-    public void update(AccessRecordBean accessRecordBean) {
-        Optional<AccessRecord> optional = accessRecordDAO.findById(accessRecordBean.getId());
-        AccessRecord accessRecord = optional.get();
-        accessRecord.setUserId(accessRecordBean.getUserId());
-        accessRecord.setLockId(accessRecordBean.getLockId());
-        accessRecord.setAccessTime(accessRecordBean.getAccessTime());
-        accessRecord.setSuccess(accessRecordBean.getSuccess());
-        accessRecordDAO.update(accessRecord);
-    }
-
-    public void delete(Integer id) {
-        accessRecordDAO.deleteById(id);
-    }
-
     private AccessRecordBean convertEntityToBean(AccessRecord accessRecord){
         AccessRecordBean accessRecordBean = new AccessRecordBean();
         accessRecordBean.setId(accessRecord.getId());
-        accessRecordBean.setUserId(accessRecord.getUserId());
-        accessRecordBean.setLockId(accessRecord.getLockId());
+        accessRecordBean.setUserId(accessRecord.getUser().getId());
+        accessRecordBean.setUserName(accessRecord.getUser().getName());
+        accessRecordBean.setLockId(accessRecord.getLock().getId());
+        accessRecordBean.setLockName(accessRecord.getLock().getName());
         accessRecordBean.setAccessTime(accessRecord.getAccessTime());
         accessRecordBean.setSuccess(accessRecord.getSuccess());
         return accessRecordBean;
     }
 
-    private AccessRecord convertBeanToEntity(AccessRecordBean accessRecordBean){
-        AccessRecord accessRecord = new AccessRecord();
-        accessRecord.setId(accessRecordBean.getId());
-        accessRecord.setUserId(accessRecordBean.getUserId());
-        accessRecord.setLockId(accessRecordBean.getLockId());
-        accessRecord.setAccessTime(accessRecordBean.getAccessTime());
-        accessRecord.setSuccess(accessRecordBean.getSuccess());
-        return accessRecord;
-    }
 }
