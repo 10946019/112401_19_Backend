@@ -5,11 +5,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class AccessLogsBean {
+public class AccessRecordBean {
     public Integer id;
-    public String userAccount;
-    public Integer doorId;
+    public Integer userId;
+    public Integer lockId;
     public LocalDateTime accessTime;
-    public Boolean accessResult;
-    public String accessMethod;
+    public Boolean success;
 }

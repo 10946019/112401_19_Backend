@@ -22,9 +22,9 @@ public class UserController {
         return ResponseEntity.ok(userService.searchAll());
     }
 
-    @GetMapping(path = "", params = {"account"})
-    public ResponseEntity<UserBean> getUser(@RequestParam(name = "account") String account){
-        UserBean userBean = userService.getById(account).orElseThrow(()-> new ResourceNotFoundException("此帳號不存在"));
+    @GetMapping(path = "", params = {"id"})
+    public ResponseEntity<UserBean> getUser(@RequestParam(name = "id") Integer id){
+        UserBean userBean = userService.getById(id).orElseThrow(()-> new ResourceNotFoundException("此帳號不存在"));
         return ResponseEntity.ok(userBean);
     }
 
@@ -40,9 +40,9 @@ public class UserController {
         return ResponseEntity.ok(userBean);
     }
 
-    @DeleteMapping(path = "", params = {"account"})
-    public ResponseEntity<HttpStatus> deleteUser(@RequestParam(name = "account") String account){
-        userService.delete(account);
+    @DeleteMapping(path = "", params = {"id"})
+    public ResponseEntity<HttpStatus> deleteUser(@RequestParam(name = "id") Integer id){
+        userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

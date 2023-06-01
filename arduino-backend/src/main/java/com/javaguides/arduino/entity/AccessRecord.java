@@ -11,33 +11,33 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "access_logs")
-public class AccessLogs {
+@Table(name = "accessrecord")
+public class AccessRecord {
     /**
-     * 開鎖紀錄id
+     * id
      *
      * @Since 1.0.1
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     /**
-     * 開鎖的使用者
+     * 使用者id
      *
      * @Since 1.0.1
      */
-    @Column(name = "user_account", length = 45,nullable = false)
-    private String userAccount;
+    @Column(name = "user_id")
+    private Integer userId;
 
     /**
-     * 開哪一個門
+     * 鎖id
      *
      * @Since 1.0.1
      */
-    @Column(name = "door_id")
-    private Integer doorId;
+    @Column(name = "lock_id")
+    private Integer lockId;
 
     /**
      * 開鎖時間
@@ -52,15 +52,7 @@ public class AccessLogs {
      *
      * @Since 1.0.1
      */
-    @Column(name = "access_result", nullable = false)
-    private Boolean accessResult;
-
-    /**
-     * 開鎖方式(0:密碼/1:指紋/2:影像/3:聲音)
-     *
-     * @Since 1.0.1
-     */
-    @Column(name = "access_method", length = 3, nullable = false)
-    private String accessMethod;
+    @Column(name = "success", nullable = false)
+    private Boolean success;
 
 }

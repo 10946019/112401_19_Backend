@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @NoRepositoryBean
-public interface BaseViewDAO <E, ID extends Serializable> extends Repository<E, ID>, QueryByExampleExecutor<E> {
+public interface BaseViewDAO<E, ID extends Serializable> extends Repository<E, ID>, QueryByExampleExecutor<E> {
     @Nonnull
     Optional<E> findById(@Nonnull ID id);
 

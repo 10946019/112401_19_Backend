@@ -9,39 +9,39 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "door")
-public class Door {
+@Table(name = "authorization")
+public class Authorization {
     /**
-     * 門的id
+     * id
      *
      * @Since 1.0.1
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     /**
-     * 門的名稱
+     * 使用者id
      *
      * @Since 1.0.1
      */
-    @Column(name = "name", length = 45,nullable = false)
-    private String name;
+    @Column(name = "user_id")
+    private Integer userId;
 
     /**
-     * 門的位置
+     * 鎖id
      *
      * @Since 1.0.1
      */
-    @Column(name = "location", length = 100,nullable = false)
-    private String location;
+    @Column(name = "lock_id")
+    private Integer lockId;
 
     /**
-     * 詳細描述
+     * 訪問方式id
      *
      * @Since 1.0.1
      */
-    @Column(name = "description", length = 200)
-    private String description;
+    @Column(name = "access_mode_id")
+    private Integer accessModeId;
 }
