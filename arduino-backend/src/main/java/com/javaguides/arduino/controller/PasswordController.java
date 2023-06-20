@@ -4,7 +4,6 @@ import com.javaguides.arduino.bean.PasswordBean;
 import com.javaguides.arduino.exception.ResourceNotFoundException;
 import com.javaguides.arduino.service.PasswordService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
